@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head('Profile')"></head>
+<body>
+    <div th:replace="layout :: navbar"></div>
+
+    <div class="container" style="display: flex; justify-content: center;">
+        <div class="ag-card" style="width: 600px; margin-top: 20px;">
+            <h2 class="text-cyan" style="text-align: center;">Profile Configuration</h2>
+            
+            <div th:if="${successMessage}" style="color: #00ffff; text-align: center; margin-bottom: 15px;" th:text="${successMessage}"></div>
+            <div th:if="${errorMessage}" style="color: #ff453a; text-align: center; margin-bottom: 15px;" th:text="${errorMessage}"></div>
+
+            <form th:action="@{/profile}" th:object="${user}" method="post" enctype="multipart/form-data">
+                <input type="hidden" th:field="*{id}">
+                <input type="hidden" th:field="*{email}">
+                <input type="hidden" th:field="*{role}">
+
+                <label class="text-muted">Full Name / Company Name</label>
+                <input type="text" th:field="*{name}" class="ag-input" required>
+
+                <label class="text-muted">Location</label>
+                <input type="text" th:field="*{location}" class="ag-input">
+
+                <div th:if="${user.role.name() == 'STUDENT'}">
+                    <label class="text-muted">Skills</label>
+                    <input type="text" th:field="*{skills}" class="ag-input" placeholder="e.g. Java, Python">
+
+                    <label class="text-muted">Experience</label>
+                    <input type="text" th:field="*{experience}" class="ag-input" placeholder="e.g. 2 years">
+
+                    <label class="text-muted">Upload Resume (PDF/Word)</label>
+                    <input type="file" name="resume" class="ag-input">
+                    <small class="text-muted" th:if="${user.resumeFileName != null}">Current File: <span class="text-cyan" th:text="${user.resumeFileName}"></span></small>
+                </div>
+
+                <button type="submit" class="ag-btn" style="width: 100%; margin-top: 20px;">Update Profile</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

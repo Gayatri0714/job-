@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head('Post Job')"></head>
+<body>
+    <div th:replace="layout :: navbar"></div>
+
+    <div class="container">
+        
+        <h2 class="text-purple">Post a New Job</h2>
+        
+        <div class="ag-card" style="max-width: 800px; margin-top: 20px;">
+            <form th:action="@{/jobs/post}" th:object="${job}" method="post">
+                
+                <div style="display: flex; gap: 20px;">
+                    <div style="flex: 1;">
+                        <label class="text-muted">Job Title</label>
+                        <input type="text" th:field="*{title}" class="ag-input" required>
+                        <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" style="color:red;"></p>
+                    </div>
+                    <div style="flex: 1;">
+                        <label class="text-muted">Location</label>
+                        <input type="text" th:field="*{location}" class="ag-input">
+                    </div>
+                </div>
+
+                <label class="text-muted">Required Skills</label>
+                <input type="text" th:field="*{requiredSkills}" class="ag-input" placeholder="e.g. Java, Spring Boot, React">
+
+                <div style="display: flex; gap: 20px;">
+                    <div style="flex: 1;">
+                        <label class="text-muted">Salary</label>
+                        <input type="text" th:field="*{salary}" class="ag-input" placeholder="e.g. $100k - $120k">
+                    </div>
+                </div>
+
+                <label class="text-muted">Detailed Description</label>
+                <textarea th:field="*{description}" class="ag-textarea" rows="6" required></textarea>
+                <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}" style="color:red;"></p>
+
+                <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+                    <a th:href="@{/dashboard}" class="ag-btn ag-btn-outline">Cancel</a>
+                    <button type="submit" class="ag-btn">Post Job</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,183 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
+
+:root {
+    --bg-color: #0b0f19;
+    --card-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --neon-cyan: #00ffff;
+    --neon-purple: #b026ff;
+    --text-primary: #ffffff;
+    --text-muted: #a0aab2;
+}
+
+body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--bg-color);
+    background-image: radial-gradient(circle at top right, rgba(176, 38, 255, 0.15), transparent 40%),
+                      radial-gradient(circle at bottom left, rgba(0, 255, 255, 0.1), transparent 40%);
+    background-attachment: fixed;
+    color: var(--text-primary);
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Glassmorphism / Anti-gravity Card */
+.ag-card {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    background: var(--card-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+}
+
+.ag-card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: -100%;
+    width: 50%; height: 100%;
+    background: linear-gradient(to right, transparent, rgba(255,255,255,0.05), transparent);
+    transform: skewX(-20deg);
+    transition: 0.5s;
+}
+
+.ag-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 30px rgba(0, 255, 255, 0.2);
+}
+
+.ag-card:hover::before {
+    left: 150%;
+}
+
+/* Neon Inputs */
+.ag-input, .ag-select, .ag-textarea {
+    width: 100%;
+    background: rgba(0,0,0,0.2) !important;
+    border: 1px solid var(--glass-border) !important;
+    color: var(--text-primary) !important;
+    padding: 12px 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    transition: all 0.3s;
+    font-family: 'Outfit', sans-serif;
+}
+
+.ag-input:focus, .ag-select:focus, .ag-textarea:focus {
+    border-color: var(--neon-cyan) !important;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.3) !important;
+    outline: none;
+}
+
+/* Neon Buttons */
+.ag-btn {
+    background: linear-gradient(45deg, var(--neon-purple), #6312a8);
+    border: none;
+    padding: 12px 24px;
+    color: white;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+
+.ag-btn:hover {
+    box-shadow: 0 0 20px rgba(176, 38, 255, 0.6);
+    transform: scale(1.05);
+}
+
+.ag-btn-outline {
+    background: transparent;
+    border: 1px solid var(--neon-cyan);
+    color: var(--neon-cyan);
+}
+
+.ag-btn-outline:hover {
+    background: rgba(0,255,255,0.1);
+    box-shadow: 0 0 15px rgba(0,255,255,0.4);
+}
+
+/* Navbar */
+.ag-navbar {
+    background: rgba(11, 15, 25, 0.8);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--glass-border);
+    padding: 15px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.ag-logo {
+    font-size: 24px;
+    font-weight: 800;
+    background: linear-gradient(45deg, var(--neon-cyan), var(--neon-purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-decoration: none;
+}
+
+.ag-nav-links a {
+    color: var(--text-primary);
+    text-decoration: none;
+    margin-left: 20px;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.ag-nav-links a:hover {
+    color: var(--neon-cyan);
+    text-shadow: 0 0 8px rgba(0, 255, 255, 0.5);
+}
+
+/* Container */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 40px auto;
+    flex-grow: 1;
+}
+
+/* Typography elements */
+h1, h2, h3 {
+    margin-top: 0;
+}
+.text-cyan { color: var(--neon-cyan); }
+.text-purple { color: var(--neon-purple); }
+.text-muted { color: var(--text-muted); text-transform: uppercase; font-size: 0.85em; }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table, th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+/* Badges */
+.badge {
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+.badge-pending { background: rgba(255, 193, 7, 0.2); color: #ffc107; border: 1px solid #ffc107; }
+.badge-shortlisted { background: rgba(0, 255, 255, 0.2); color: #00ffff; border: 1px solid #00ffff; }
+.badge-rejected { background: rgba(255, 69, 58, 0.2); color: #ff453a; border: 1px solid #ff453a; }

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head('Applicants Viewer')"></head>
+<body>
+    <div th:replace="layout :: navbar"></div>
+
+    <div class="container">
+        <a th:href="@{/dashboard}" class="text-muted" style="text-decoration:none; margin-bottom: 20px; display:inline-block;">&lt; Return to Dashboard</a>
+
+        <h2 class="text-purple">Job Applicants for: <span class="text-cyan" th:text="${job.title}"></span></h2>
+
+        <div class="ag-card" style="padding: 0; margin-top: 20px;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Candidate Name</th>
+                        <th>Skills</th>
+                        <th>Applied On</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="app : ${applications}">
+                        <td th:text="${app.user.name}"></td>
+                        <td th:text="${app.user.skills}"></td>
+                        <td th:text="${#temporals.format(app.appliedAt, 'dd-MMM-yyyy HH:mm')}"></td>
+                        <td>
+                             <span th:class="'badge badge-' + ${#strings.toLowerCase(app.status)}" th:text="${app.status}"></span>
+                        </td>
+                        <td>
+                            <form th:action="@{/employer/application/{id}/status(id=${app.id})}" method="post" style="display:flex; gap: 10px;">
+                                <select name="status" class="ag-select" style="margin-bottom:0; padding:5px; width:auto;">
+                                    <option value="PENDING" th:selected="${app.status.name() == 'PENDING'}">Pending</option>
+                                    <option value="SHORTLISTED" th:selected="${app.status.name() == 'SHORTLISTED'}">Shortlist</option>
+                                    <option value="REJECTED" th:selected="${app.status.name() == 'REJECTED'}">Reject</option>
+                                </select>
+                                <button type="submit" class="ag-btn" style="padding: 5px 10px; font-size: 0.8rem;">Update</button>
+                            </form>
+                        </td>
+                    </tr>
+                    <tr th:if="${applications.empty}">
+                        <td colspan="5" style="text-align: center; color: var(--text-muted);">No candidates have applied yet.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

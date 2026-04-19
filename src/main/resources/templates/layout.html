@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title} + ' | Nova Jobs'">Nova Jobs</title>
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+</head>
+<body>
+    <div th:fragment="navbar" class="ag-navbar">
+        <a th:href="@{/}" class="ag-logo">Nova Jobs 🚀</a>
+        <div class="ag-nav-links">
+            <a th:href="@{/jobs}">Browse Jobs</a>
+            
+            <span sec:authorize="!isAuthenticated()">
+                <a th:href="@{/login}">Login</a>
+                <a th:href="@{/register}" class="ag-btn">Sign Up</a>
+            </span>
+            
+            <span sec:authorize="isAuthenticated()">
+                <a th:href="@{/dashboard}">Dashboard</a>
+                <a th:href="@{/profile}">Profile</a>
+                <form th:action="@{/logout}" method="post" style="display:inline;">
+                    <button type="submit" class="ag-btn ag-btn-outline" style="padding: 6px 12px;">Logout</button>
+                </form>
+            </span>
+        </div>
+    </div>
+</body>
+</html>

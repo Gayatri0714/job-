@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head('System Error')"></head>
+<body>
+    <div th:replace="layout :: navbar"></div>
+    <div class="container" style="text-align: center; margin-top: 100px;">
+        <h1 style="color: #ff453a; font-size: 5rem; text-shadow: 0 0 20px rgba(255,69,58,0.5);">500</h1>
+        <h2 class="text-muted">System Malfunction Detected</h2>
+        <p th:text="${message}" style="color: var(--text-primary); margin: 20px 0;"></p>
+        <a th:href="@{/}" class="ag-btn">Initiate Reboot Return</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head('Student Dashboard')"></head>
+<body>
+    <div th:replace="layout :: navbar"></div>
+
+    <div class="container">
+        
+        <h2 style="margin-bottom: 5px;">Welcome, <span class="text-cyan" th:text="${user.name}"></span></h2>
+        <div class="text-muted" style="margin-bottom: 30px;">Student Dashboard</div>
+
+        <div class="ag-card" style="margin-bottom: 30px;">
+            <h3 class="text-purple">Quick Actions</h3>
+            <div style="display: flex; gap: 15px;">
+                <a th:href="@{/jobs}" class="ag-btn">Browse Jobs</a>
+                <a th:href="@{/profile}" class="ag-btn ag-btn-outline">My Profile</a>
+            </div>
+        </div>
+
+        <h3 class="text-cyan">Application Log</h3>
+        <div class="ag-card" style="padding: 0;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Job Title</th>
+                        <th>Employer</th>
+                        <th>Applied On</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="app : ${applications}">
+                        <td th:text="${app.job.title}"></td>
+                        <td th:text="${app.job.employer.name}"></td>
+                        <td th:text="${#temporals.format(app.appliedAt, 'dd-MMM-yyyy HH:mm')}"></td>
+                        <td>
+                            <span th:class="'badge badge-' + ${#strings.toLowerCase(app.status)}" th:text="${app.status}"></span>
+                        </td>
+                    </tr>
+                    <tr th:if="${applications.empty}">
+                        <td colspan="4" style="text-align: center; color: var(--text-muted);">No applications sent yet.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head('Employer Dashboard')"></head>
+<body>
+    <div th:replace="layout :: navbar"></div>
+
+    <div class="container">
+        
+        <div th:if="${param.success}" class="ag-card" style="margin-bottom: 20px; border-color: var(--neon-cyan); text-align: center;">
+            <span th:text="${param.success}" class="text-cyan"></span>
+        </div>
+
+        <h2 style="margin-bottom: 5px;">Welcome, <span class="text-purple" th:text="${user.name}"></span></h2>
+        <div class="text-muted" style="margin-bottom: 30px;">Employer Dashboard</div>
+
+        <div class="ag-card" style="margin-bottom: 30px;">
+            <h3 class="text-cyan">Quick Actions</h3>
+            <div style="display: flex; gap: 15px;">
+                <a th:href="@{/jobs/post}" class="ag-btn">Post a New Job</a>
+                <a th:href="@{/profile}" class="ag-btn ag-btn-outline">Edit Company Profile</a>
+            </div>
+        </div>
+
+        <h3 class="text-purple">Active Job Postings</h3>
+        <div class="ag-card" style="padding: 0;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Job Title</th>
+                        <th>Applications</th>
+                        <th>Location</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="job : ${jobs}">
+                        <td th:text="${job.title}"></td>
+                        <td>
+                            <span class="badge badge-pending" th:text="${job.applications.size()} + ' Received'"></span>
+                        </td>
+                        <td th:text="${job.location}"></td>
+                        <td>
+                            <a th:href="@{/employer/applications/{id}(id=${job.id})}" class="ag-btn" style="padding: 5px 10px; font-size: 0.8rem;">Review Candidates</a>
+                        </td>
+                    </tr>
+                    <tr th:if="${jobs.empty}">
+                        <td colspan="4" style="text-align: center; color: var(--text-muted);">No jobs posted yet.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head('Admin Terminal')"></head>
+<body>
+    <div th:replace="layout :: navbar"></div>
+
+    <div class="container">
+        <h2 class="text-cyan">Admin Dashboard</h2>
+        <div class="text-muted" style="margin-bottom: 30px;">Administrator Panel</div>
+
+        <div style="display: flex; gap: 20px; margin-bottom: 30px;">
+            <div class="ag-card" style="flex: 1; text-align: center;">
+                <h3>Total Users</h3>
+                <h1 class="text-purple" th:text="${users.size()}"></h1>
+            </div>
+            <div class="ag-card" style="flex: 1; text-align: center;">
+                <h3>Active Jobs</h3>
+                <h1 class="text-cyan" th:text="${totalJobs}"></h1>
+            </div>
+        </div>
+
+        <h3>System Users</h3>
+        <div class="ag-card" style="padding: 0;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="u : ${users}">
+                        <td th:text="${u.id}"></td>
+                        <td th:text="${u.name}"></td>
+                        <td th:text="${u.email}"></td>
+                        <td><span th:text="${u.role}" th:class="'badge badge-' + ${#strings.toLowerCase(u.role)}"></span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

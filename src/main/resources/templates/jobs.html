@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layout :: head('Browse Jobs')"></head>
+<body>
+    <div th:replace="layout :: navbar"></div>
+
+    <div class="container">
+        
+        <div th:if="${successMessage}" class="ag-card" style="margin-bottom: 20px; border-color: var(--neon-cyan); text-align: center;">
+            <span th:text="${successMessage}" class="text-cyan"></span>
+        </div>
+        <div th:if="${errorMessage}" class="ag-card" style="margin-bottom: 20px; border-color: #ff453a; text-align: center;">
+            <span th:text="${errorMessage}" style="color: #ff453a;"></span>
+        </div>
+
+        <div class="ag-card" style="margin-bottom: 30px;">
+            <form th:action="@{/jobs}" method="get" style="display: flex; gap: 15px;">
+                <input type="text" name="keyword" th:value="${keyword}" placeholder="Search jobs (Title/Description)" class="ag-input" style="margin-bottom: 0;">
+                <input type="text" name="location" th:value="${location}" placeholder="Location" class="ag-input" style="margin-bottom: 0;">
+                <button type="submit" class="ag-btn">Search</button>
+                <a th:href="@{/jobs}" class="ag-btn ag-btn-outline" style="line-height: inherit;">Clear Filters</a>
+            </form>
+        </div>
+
+        <h2 class="text-cyan">Available Jobs (<span th:text="${jobs.size()}"></span>)</h2>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;">
+            <div th:each="job : ${jobs}" class="ag-card">
+                <h3 th:text="${job.title}" class="text-cyan" style="margin-bottom: 5px;"></h3>
+                <div class="text-muted" style="margin-bottom: 15px;">
+                    <span th:text="${job.employer.name}"></span> • <span th:text="${job.location}"></span>
+                </div>
+                
+                <p th:text="${#strings.abbreviate(job.description, 100)}"></p>
+                
+                <div style="margin-bottom: 15px;">
+                    <strong>Salary:</strong> <span th:text="${job.salary ?: 'Negotiable'}"></span><br>
+                    <strong>Required Skills:</strong> <span class="text-purple" th:text="${job.requiredSkills}"></span>
+                </div>
+
+                <div sec:authorize="hasRole('STUDENT')">
+                    <form th:action="@{/student/apply/{id}(id=${job.id})}" method="post">
+                        <button type="submit" class="ag-btn" style="width: 100%;">Apply Now</button>
+                    </form>
+                </div>
+                <div sec:authorize="!hasRole('STUDENT') and !hasRole('EMPLOYER') and !hasRole('ADMIN')">
+                    <a th:href="@{/login}" class="ag-btn ag-btn-outline" style="width: 100%; box-sizing: border-box;">Login to Apply</a>
+                </div>
+            </div>
+            
+            <div th:if="${jobs.empty}" style="grid-column: 1 / -1; text-align: center; color: var(--text-muted); margin-top: 40px;">
+                <h3 style="font-weight: 300;">No jobs found matching your criteria.</h3>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

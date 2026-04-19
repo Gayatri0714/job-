@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head('Login')"></head>
+<body>
+    <div th:replace="layout :: navbar"></div>
+
+    <div class="container" style="display: flex; justify-content: center;">
+        <div class="ag-card" style="width: 500px; margin-top: 50px;">
+            <h2 class="text-purple" style="text-align: center; margin-bottom: 20px;">Create an Account</h2>
+            
+            <div th:if="${param.error}" style="color: #ff453a; text-align: center; margin-bottom: 15px;">
+                Invalid email or password.
+            </div>
+            <div th:if="${param.logout}" style="color: #00ffff; text-align: center; margin-bottom: 15px;">
+                You have been logged out.
+            </div>
+            <div th:if="${param.success}" style="color: #00ffff; text-align: center; margin-bottom: 15px;">
+                Registration successful! Please login.
+            </div>
+
+            <form th:action="@{/login}" method="post">
+                <label class="text-muted">Select Role</label>
+                <select th:field="*{role}" class="ag-select" required>
+                    <option value="STUDENT">Student / Job Seeker</option>
+                    <option value="EMPLOYER">Employer / Recruiter</option>
+                </select>
+
+                <button type="submit" class="ag-btn" style="width: 100%; margin-top: 20px;">Sign Up</button>
+            </form>
+            <div style="text-align: center; margin-top: 20px;">
+                <p>Don't have an account? <a th:href="@{/register}" class="text-cyan" style="text-decoration:none;">Register</a></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

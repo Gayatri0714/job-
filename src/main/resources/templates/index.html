@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head('Welcome')"></head>
+<body>
+    <div th:replace="layout :: navbar"></div>
+    
+    <div class="container" style="text-align: center; margin-top: 100px;">
+        <h1 style="font-size: 4rem; margin-bottom: 20px;">Welcome to the <span class="text-cyan">Future</span> of Hiring.</h1>
+        <p style="font-size: 1.2rem; color: #a0aab2; max-width: 600px; margin: 0 auto 40px auto;">
+            Experience our anti-gravity job portal. Seamlessly connect top talent with visionary companies floating in the cosmos.
+        </p>
+        <div>
+            <a th:href="@{/jobs}" class="ag-btn" style="margin-right: 15px;">Explore Jobs</a>
+            <a th:href="@{/register}" class="ag-btn ag-btn-outline">Join the Network</a>
+        </div>
+
+        <div style="margin-top: 100px; display: flex; justify-content: space-around;">
+            <div class="ag-card" style="width: 30%;">
+                <h3 class="text-cyan">For Seekers</h3>
+                <p>Upload your resume, find the perfect role matching your skills, and track applications.</p>
+            </div>
+            <div class="ag-card" style="width: 30%;">
+                <h3 class="text-purple">For Employers</h3>
+                <p>Post opportunities, shortlist top tier candidates, and build your dream team.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

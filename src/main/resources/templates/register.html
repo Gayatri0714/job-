@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head('Register')"></head>
+<body>
+    <div th:replace="layout :: navbar"></div>
+
+    <div class="container" style="display: flex; justify-content: center;">
+        <div class="ag-card" style="width: 500px; margin-top: 50px;">
+            <h2 class="text-purple" style="text-align: center; margin-bottom: 20px;">Create an Account</h2>
+            
+            <form th:action="@{/register}" th:object="${user}" method="post">
+                
+                <label class="text-muted">Full Name / Company Name</label>
+                <input type="text" th:field="*{name}" class="ag-input" required>
+                <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color:red; margin-top:-10px;"></p>
+
+                <label class="text-muted">Email Address</label>
+                <input type="email" th:field="*{email}" class="ag-input" required>
+                <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" style="color:red; margin-top:-10px;"></p>
+
+                <label class="text-muted">Password (Min 6 chars)</label>
+                <input type="password" th:field="*{password}" class="ag-input" required>
+                <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" style="color:red; margin-top:-10px;"></p>
+
+                <label class="text-muted">Select Role</label>
+                <select th:field="*{role}" class="ag-select" required>
+                    <option value="STUDENT">Student / Job Seeker</option>
+                    <option value="EMPLOYER">Employer / Recruiter</option>
+                </select>
+
+                <button type="submit" class="ag-btn" style="width: 100%; margin-top: 20px;">Sign Up</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
